@@ -33,20 +33,18 @@ app.post("/api/posts", (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  console.log(post);
+  post.save();
   res.status(201).json({
     message: 'Post added sucessfully'
   });
 });
 
 app.get("/api/posts", (req, res, next) => {
-  const posts = [
-    { id: "sdsf", title: "First server side post!", content: "Meow" },
-    { id: "sdczxcsf", title: "2nd server side post", content: "Moo" }
-  ];
-  res.status(200).json({
-    message: "Posts fetched successfully",
-    posts: posts
+  Post.find().then(documents => {
+    res.status(200).json({
+      message: "Posts fetched successfully",
+      posts: documents
+    });
   });
 });
 
